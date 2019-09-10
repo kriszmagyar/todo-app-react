@@ -14,7 +14,7 @@ You will also see any lint errors in the console.
 
 ### `npm run server`
 
-Starts the develoment API server.
+Starts the develoment API server on [http://localhost:8080](http://localhost:8080).
 
 ### `npm run build`
 
