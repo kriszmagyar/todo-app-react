@@ -17,13 +17,27 @@ function App() {
       .catch(err => console.error(err))
   }, []);
 
+  const handleClick = () => {
+    fetch('/api/todos', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({title: 'Todo from fontend'})
+    })
+      .then(res => console.log(res))
+      .catch(err => console.error(err))
+  };
+
   return (
     <div className="App">
       <ul>
         { todos.map(todo => 
-          <li key={todo.id}>{ todo.title }</li>
+          <li key={todo.id}>{todo.title}</li>
         ) }
       </ul>
+      <button onClick={handleClick}>POST</button>
     </div>
   );
 }
