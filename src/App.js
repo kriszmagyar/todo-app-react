@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { CssBaseline } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = {};
 
 function App() {
 
@@ -26,19 +30,23 @@ function App() {
       },
       body: JSON.stringify({title: 'Todo from fontend'})
     })
+      .then(res => res.json())
       .then(res => console.log(res))
       .catch(err => console.error(err))
   };
 
   return (
-    <div className="App">
-      <ul>
-        { todos.map(todo => 
-          <li key={todo.id}>{todo.title}</li>
-        ) }
-      </ul>
-      <button onClick={handleClick}>POST</button>
-    </div>
+    <React.Fragment>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <ul>
+          { todos.map(todo => 
+            <li key={todo.id}>{todo.id} - {todo.title}</li>
+          ) }
+        </ul>
+        <button onClick={handleClick}>POST</button>
+      </ThemeProvider>
+    </React.Fragment>
   );
 }
 
