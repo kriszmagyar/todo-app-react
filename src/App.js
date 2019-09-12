@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { CssBaseline } from '@material-ui/core';
+import { CssBaseline, Container, Button } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
-
-const theme = {};
+import theme from './theme';
+import Nav from './components/Nav';
+import TodoList from './todos/TodoList';
 
 function App() {
 
@@ -39,12 +40,11 @@ function App() {
     <React.Fragment>
       <CssBaseline />
       <ThemeProvider theme={theme}>
-        <ul>
-          { todos.map(todo => 
-            <li key={todo.id}>{todo.id} - {todo.title}</li>
-          ) }
-        </ul>
-        <button onClick={handleClick}>POST</button>
+        <Nav />
+        <Container>
+          <TodoList todos={todos} />
+          <Button onClick={handleClick}>POST</Button>
+        </Container>
       </ThemeProvider>
     </React.Fragment>
   );
