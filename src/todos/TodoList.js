@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
@@ -35,3 +36,10 @@ export default function TodoList({ todos }) {
     </Paper>
   );
 }
+
+TodoList.propTypes = {
+    todos: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired
+    })).isRequired
+};

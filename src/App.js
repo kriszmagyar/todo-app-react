@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { CssBaseline, Container, Button } from '@material-ui/core';
+import { CssBaseline, Container } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './theme';
 import Nav from './components/Nav';
 import TodoList from './todos/TodoList';
+import AddButton from './components/AddButton';
 
-function App() {
+export default function App() {
 
   const [todos, setTodos] = useState([]);
 
@@ -43,11 +44,9 @@ function App() {
         <Nav />
         <Container>
           <TodoList todos={todos} />
-          <Button onClick={handleClick}>POST</Button>
+          <AddButton handleClick={handleClick} />
         </Container>
       </ThemeProvider>
     </React.Fragment>
   );
 }
-
-export default App;
