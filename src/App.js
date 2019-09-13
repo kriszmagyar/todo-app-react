@@ -5,10 +5,12 @@ import theme from './theme';
 import Nav from './components/Nav';
 import TodoList from './todos/TodoList';
 import AddButton from './components/AddButton';
+import TodoDialog from './todos/TodoDialog';
 
 export default function App() {
 
   const [todos, setTodos] = useState([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     fetch('/api/todos')
@@ -45,6 +47,18 @@ export default function App() {
     console.log("Editing: " + id);
   }
 
+  const addTodo = (todo) => {
+    console.log("Adding: " + todo);
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  }
+
+  const handleOpen = () => {
+    setOpen(true);
+  }
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -52,7 +66,8 @@ export default function App() {
         <Nav />
         <Container>
           <TodoList todos={todos} handleDelete={handleDelete} handleEdit={handleEdit} />
-          <AddButton handleClick={handleClick} />
+          <AddButton handleClick={handleOpen} />
+          <TodoDialog open={open} handleSubmit={addTodo} handleClose={handleClose} />
         </Container>
       </ThemeProvider>
     </React.Fragment>
