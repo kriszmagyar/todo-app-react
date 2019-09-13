@@ -24,7 +24,7 @@ export default function TodoList({ todos, handleDelete, handleEdit }) {
           <TableRow>
             <TableCell>#</TableCell>
             <TableCell>Title</TableCell>
-            <TableCell align="right">Actions</TableCell>
+            <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

@@ -16,7 +16,7 @@ export default function AddButton({handleClick}) {
     const classes = useStyles();
 
     return (
-        <Fab color="primary" aria-label="add todo" className={classes.fab} onClick={handleClick}>
+        <Fab color="primary" aria-label="add" className={classes.fab} onClick={handleClick}>
             <AddIcon />
         </Fab>
     )

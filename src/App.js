@@ -48,7 +48,8 @@ export default function App() {
   }
 
   const addTodo = (todo) => {
-    console.log("Adding: " + todo);
+    console.log("Adding: ", todo);
+    setOpen(false);
   }
 
   const handleClose = () => {

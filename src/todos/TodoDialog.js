@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, useTheme, useMediaQuery } from '@material-ui/core';
 
 export default function TodoDialog({ open, handleClose, handleSubmit }) {
+
+  const [title, setTitle] = useState([]);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -17,6 +19,8 @@ export default function TodoDialog({ open, handleClose, handleSubmit }) {
             id="title"
             label="Title"
             type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             fullWidth
           />
         </DialogContent>
@@ -24,7 +28,7 @@ export default function TodoDialog({ open, handleClose, handleSubmit }) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleSubmit} color="primary">
+          <Button onClick={() => handleSubmit({ title })} color="primary">
             Save
           </Button>
         </DialogActions>
@@ -33,7 +37,7 @@ export default function TodoDialog({ open, handleClose, handleSubmit }) {
 }
 
 TodoDialog.propTypes = {
-  open: PropTypes.bool,
+  open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired
 };
