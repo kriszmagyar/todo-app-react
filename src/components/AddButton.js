@@ -6,9 +6,9 @@ import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles(theme => ({
     fab: {
-      position: 'absolute',
-      bottom: theme.spacing(2),
-      right: theme.spacing(2),
+        position: 'absolute',
+        bottom: theme.spacing(2),
+        right: theme.spacing(2),
     },
 }));
 

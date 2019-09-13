@@ -37,13 +37,21 @@ export default function App() {
       .catch(err => console.error(err))
   };
 
+  const handleDelete = (id) => {
+    console.log("Deleting: " + id);
+  }
+
+  const handleEdit = (id) => {
+    console.log("Editing: " + id);
+  }
+
   return (
     <React.Fragment>
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <Nav />
         <Container>
-          <TodoList todos={todos} />
+          <TodoList todos={todos} handleDelete={handleDelete} handleEdit={handleEdit} />
           <AddButton handleClick={handleClick} />
         </Container>
       </ThemeProvider>
