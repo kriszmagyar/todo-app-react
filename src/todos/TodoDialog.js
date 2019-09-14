@@ -20,6 +20,7 @@ class TodoDialog extends React.Component {
     const { handleClose, handleSubmit } = this.props;
     handleSubmit(this.state);
     handleClose();
+    this.setState({ title: "" });
   }
 
   render() {
