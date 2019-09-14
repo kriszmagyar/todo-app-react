@@ -1,9 +1,11 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Tooltip } from '@material-ui/core';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import SettingsIcon from '@material-ui/icons/Settings';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginBottom: theme.spacing(2)
+  },
   title: {
     flexGrow: 1,
   },
@@ -19,11 +21,6 @@ export default function Nav() {
           <Typography variant="h6" className={classes.title}>
             Todo App
           </Typography>
-          <Tooltip title="Settings">
-            <IconButton color="inherit">
-              <SettingsIcon />
-            </IconButton>
-          </Tooltip>
         </Toolbar>
       </AppBar>
     </div>
