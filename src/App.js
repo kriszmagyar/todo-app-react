@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { CssBaseline, Container } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './theme';
@@ -9,22 +9,7 @@ import TodoDialog from './todos/TodoDialog';
 
 export default function App() {
 
-  const [todos, setTodos] = useState([]);
   const [open, setOpen] = useState(false);
-
-  const handleClick = () => {
-    fetch('/api/todos', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({title: 'Todo from fontend'})
-    })
-      .then(res => res.json())
-      .then(res => console.log(res))
-      .catch(err => console.error(err))
-  };
 
   const handleDelete = (id) => {
     console.log("Deleting: " + id);
@@ -34,28 +19,15 @@ export default function App() {
     console.log("Editing: " + id);
   }
 
-  const addTodo = (todo) => {
-    console.log("Adding: ", todo);
-    setOpen(false);
-  }
-
-  const handleClose = () => {
-    setOpen(false);
-  }
-
-  const handleOpen = () => {
-    setOpen(true);
-  }
-
   return (
     <React.Fragment>
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <Nav />
         <Container>
-          <TodoList todos={todos} handleDelete={handleDelete} handleEdit={handleEdit} />
-          <AddButton handleClick={handleOpen} />
-          <TodoDialog open={open} handleSubmit={addTodo} handleClose={handleClose} />
+          <TodoList handleDelete={handleDelete} handleEdit={handleEdit} />
+          <AddButton handleClick={() => setOpen(true)} />
+          <TodoDialog open={open} handleClose={() => setOpen(false)} />
         </Container>
       </ThemeProvider>
     </React.Fragment>

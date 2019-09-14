@@ -1,10 +1,18 @@
-export const FETCH_TODOS_PENDING = 'FETCH_TODOS_PENDING';
+export const FETCH_PENDING = 'FETCH_PENDING';
+export const FETCH_ERROR = 'FETCH_ERROR';
 export const FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS';
-export const FETCH_TODOS_ERROR = 'FETCH_TODOS_ERROR';
+export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS';
 
-export function fetchTodosPending() {
+export function fetchPending() {
     return {
-        type: FETCH_TODOS_PENDING
+        type: FETCH_PENDING
+    }
+};
+
+export function fetchError(error) {
+    return {
+        type: FETCH_ERROR,
+        error
     }
 };
 
@@ -15,9 +23,9 @@ export function fetchTodosSuccess(todos) {
     }
 };
 
-export function fetchTodosError(error) {
+export function addTodoSuccess(todo) {
     return {
-        type: FETCH_TODOS_ERROR,
-        error
+        type: ADD_TODO_SUCCESS,
+        payload: todo
     }
 };

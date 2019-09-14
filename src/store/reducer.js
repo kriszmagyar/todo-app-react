@@ -1,4 +1,4 @@
-import { FETCH_TODOS_PENDING, FETCH_TODOS_SUCCESS, FETCH_TODOS_ERROR } from "./actions";
+import { FETCH_PENDING, FETCH_TODOS_SUCCESS, FETCH_ERROR, ADD_TODO_SUCCESS } from "./actions";
 
 const initialState = {
     pending: false,
@@ -8,10 +8,16 @@ const initialState = {
 
 export function reducer(state = initialState, action) {
     switch (action.type) {
-        case FETCH_TODOS_PENDING:
+        case FETCH_PENDING:
             return {
                 ...state,
                 pending: true
+            }
+        case FETCH_ERROR:
+            return {
+                ...state,
+                pending: true,
+                error: action.error
             }
         case FETCH_TODOS_SUCCESS:
             return {
@@ -19,11 +25,11 @@ export function reducer(state = initialState, action) {
                 pending: false,
                 todos: action.payload
             }
-        case FETCH_TODOS_ERROR:
+        case ADD_TODO_SUCCESS:
             return {
                 ...state,
-                pending: true,
-                error: action.error
+                pending: false,
+                todos: [...state.todos, action.payload]
             }
         default : return state;
     }

@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, useTheme, useMediaQuery } from '@material-ui/core';
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
+import { addTodo } from './todoActions';
 
-export default function TodoDialog({ open, handleClose, handleSubmit }) {
+class TodoDialog extends React.Component {
 
-  const [title, setTitle] = useState([]);
+  state = {
+    title: ""
+  }
 
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  }
 
-  return (
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullScreen={fullScreen}>
+  handleSubmitClick = () => {
+    const { handleClose, handleSubmit } = this.props;
+    handleSubmit(this.state);
+    handleClose();
+  }
+
+  render() {
+    const { open, handleClose } = this.props;
+
+    return (
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Add new Todo</DialogTitle>
         <DialogContent>
           <TextField
@@ -18,21 +34,21 @@ export default function TodoDialog({ open, handleClose, handleSubmit }) {
             id="title"
             label="Title"
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            fullWidth
+            value={this.state.title}
+            onChange={this.handleChange}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={() => handleSubmit({ title })} color="primary">
+          <Button onClick={this.handleSubmitClick} color="primary">
             Save
           </Button>
         </DialogActions>
       </Dialog>
     );
+  }
 }
 
 TodoDialog.propTypes = {
@@ -40,3 +56,11 @@ TodoDialog.propTypes = {
   handleClose: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired
 };
+
+const mapDispatchToProps = dispatch => {
+  return {
+      handleSubmit: todo => dispatch(addTodo(todo))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(TodoDialog);
