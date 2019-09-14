@@ -52,6 +52,10 @@ app.delete('/api/todos/:id', (req, res) => {
     return res.status(204).send();
 })
 
+app.all('*', (req, res) => {
+    return res.status(404).send();
+});
+
 app.listen(process.env.PORT || SERVER_PORT, () => {
     console.log(`Server started on ${SERVER_PORT}.`);
 });
