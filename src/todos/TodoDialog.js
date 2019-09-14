@@ -11,11 +11,10 @@ export default function TodoDialog({ open, handleClose, handleSubmit }) {
 
   return (
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullScreen={fullScreen}>
-        <DialogTitle id="form-dialog-title">Todo</DialogTitle>
+        <DialogTitle id="form-dialog-title">Add new Todo</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
-            margin="dense"
             id="title"
             label="Title"
             type="text"

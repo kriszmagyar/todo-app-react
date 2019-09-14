@@ -12,19 +12,6 @@ export default function App() {
   const [todos, setTodos] = useState([]);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    fetch('/api/todos')
-      .then(res => {
-        if (res.status === 200) {
-          return res.json();
-        } else {
-          throw new Error(res.statusText);
-        }
-      } )
-      .then(res => setTodos(res))
-      .catch(err => console.error(err))
-  }, []);
-
   const handleClick = () => {
     fetch('/api/todos', {
       method: 'POST',
