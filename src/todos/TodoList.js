@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { getTodos } from '../store/reducer';
 import { connect } from 'react-redux';
-import { fetchTodos } from './todoActions';
+import { fetchTodos, deleteTodo } from './todoActions';
 
 class TodoList extends React.Component {
 
@@ -15,7 +15,7 @@ class TodoList extends React.Component {
   }
   
   render() {
-    const { todos, handleEdit, handleDelete } = this.props;
+    const { todos, handleEdit, deleteTodo } = this.props;
 
     return (
       <Paper>
@@ -34,7 +34,7 @@ class TodoList extends React.Component {
                 <TableCell>{todo.title}</TableCell>
                 <TableCell align="right">
                   <Tooltip title="Delete">
-                    <IconButton aria-label="delete" onClick={() => handleDelete(todo.id)}>
+                    <IconButton aria-label="delete" onClick={() => deleteTodo(todo.id)}>
                       <DeleteIcon />
                     </IconButton>
                   </Tooltip>
@@ -58,7 +58,8 @@ TodoList.propTypes = {
         id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired
     })).isRequired,
-    handleDelete: PropTypes.func.isRequired,
+    deleteTodo: PropTypes.func.isRequired,
+    fetchTodos: PropTypes.func.isRequired,
     handleEdit: PropTypes.func.isRequired
 };
 
@@ -68,7 +69,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-      fetchTodos: () => dispatch(fetchTodos())
+      fetchTodos: () => dispatch(fetchTodos()),
+      deleteTodo: id => dispatch(deleteTodo(id))
   }
 }
 

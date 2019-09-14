@@ -1,4 +1,4 @@
-import { FETCH_PENDING, FETCH_TODOS_SUCCESS, FETCH_ERROR, ADD_TODO_SUCCESS } from "./actions";
+import { FETCH_PENDING, FETCH_TODOS_SUCCESS, FETCH_ERROR, ADD_TODO_SUCCESS, DELETE_TODO_SUCCESS } from "./actions";
 
 const initialState = {
     pending: false,
@@ -30,6 +30,12 @@ export function reducer(state = initialState, action) {
                 ...state,
                 pending: false,
                 todos: [...state.todos, action.payload]
+            }
+        case DELETE_TODO_SUCCESS:
+            return {
+                ...state,
+                pending: false,
+                todos: [...state.todos.filter(t => t.id !== action.id)]
             }
         default : return state;
     }

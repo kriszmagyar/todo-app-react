@@ -1,4 +1,4 @@
-import { fetchPending, fetchError, fetchTodosSuccess, addTodoSuccess } from "../store/actions";
+import { fetchPending, fetchError, fetchTodosSuccess, addTodoSuccess, deleteTodoSuccess } from "../store/actions";
 
 export const fetchTodos = () => dispatch => {
     dispatch(fetchPending());
@@ -9,10 +9,15 @@ export const fetchTodos = () => dispatch => {
 };
 
 export const addTodo = todo => dispatch => {
-    dispatch(fetchPending());
     fetch("/api/todos", { method: "POST", headers, body: JSON.stringify(todo) })
         .then(res => res.json())
         .then(res => dispatch(addTodoSuccess(res)))
+        .catch(err => dispatch(fetchError(err)))
+}
+
+export const deleteTodo = id => dispatch => {
+    fetch(`/api/todos/${id}`, { method: "DELETE" })
+        .then(res => dispatch(deleteTodoSuccess(id)))
         .catch(err => dispatch(fetchError(err)))
 }
 
