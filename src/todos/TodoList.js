@@ -8,6 +8,7 @@ import { getTodos, getPending, getError } from '../store/reducer';
 import { connect } from 'react-redux';
 import { fetchTodos, deleteTodo, editTodo } from './todoActions';
 import Loader from '../components/Loader';
+import DoneCard from '../components/DoneCard';
 
 class TodoList extends React.Component {
 
@@ -35,7 +36,7 @@ class TodoList extends React.Component {
 
     if (pending) return <Loader />;
     if (error) return "Something bad happened! Try refresh your page!";
-    if (todos.length === 0) return "You are done for now!";
+    if (todos.length === 0) return <DoneCard />;
 
     return (
       <Paper>
