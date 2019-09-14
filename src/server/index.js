@@ -15,9 +15,12 @@ app.get('/api/todos/:id', (req, res) => {
     const id = +req.params.id;
     const todo = todos.find(t => t.id === id);
 
-    return !todo
-        ? res.status(404).send(`Todo with id ${id} is not found!`)
-        : res.send(todo);
+    if (todo) {
+        res.send(todo);
+    } else {
+        res.statusMessage = `Todo with id ${id} is not found!`;
+        res.status(404).send()
+    }
 });
 
 app.post('/api/todos', (req, res) => {
@@ -29,6 +32,7 @@ app.post('/api/todos', (req, res) => {
         res.location(`/api/todos/${newTodo.id}`);
         return res.status(201).send(newTodo);
     } else {
+        res.statusMessage = 'Missing or wrong parameters!';
         return res.status(400).send('Missing or wrong parameters!');
     }
 });
@@ -42,18 +46,20 @@ app.put('/api/todos/:id', (req, res) => {
         todo.title = title;
         return res.status(204).send();
     } else {
-        return res.status(400).send("Invalid request!");
+        res.statusMessage = 'Invalid request!';
+        return res.status(400).send();
     }
 });
 
 app.delete('/api/todos/:id', (req, res) => {
     const id = +req.params.id;
     todos = todos.filter(t => t.id !== id);
-    return res.status(204).send();
+    res.status(204).send();
 })
 
 app.all('*', (req, res) => {
-    return res.status(404).send();
+    res.statusMessage = 'Content not found!';
+    res.status(404).send();
 });
 
 app.listen(process.env.PORT || SERVER_PORT, () => {

@@ -11,17 +11,13 @@ export default function App() {
 
   const [open, setOpen] = useState(false);
 
-  const handleDelete = (id) => {
-    console.log("Deleting: " + id);
-  }
-
   return (
     <React.Fragment>
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <Nav />
         <Container>
-          <TodoList handleDelete={handleDelete} />
+          <TodoList />
           <AddButton handleClick={() => setOpen(true)} />
           <TodoDialog open={open} handleClose={() => setOpen(false)} />
         </Container>

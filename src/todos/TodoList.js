@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@ma
 import { Paper, Tooltip, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { getTodos, getPending } from '../store/reducer';
+import { getTodos, getPending, getError } from '../store/reducer';
 import { connect } from 'react-redux';
 import { fetchTodos, deleteTodo, editTodo } from './todoActions';
 
@@ -29,10 +29,11 @@ class TodoList extends React.Component {
   }
   
   render() {
-    const { todos, pending, deleteTodo } = this.props;
+    const { todos, pending, error, deleteTodo } = this.props;
     const { selectedTodoId } = this.state;
 
     if (pending) return "Loading...";
+    if (error) return "Something bad happened! Try refresh your page!";
     if (todos.length === 0) return "You are done for now!";
 
     return (
@@ -90,6 +91,7 @@ TodoList.propTypes = {
         title: PropTypes.string.isRequired
     })).isRequired,
     pending: PropTypes.bool,
+    error: PropTypes.string,
     fetchTodos: PropTypes.func.isRequired,
     deleteTodo: PropTypes.func.isRequired,
     editTodo: PropTypes.func.isRequired
@@ -98,7 +100,8 @@ TodoList.propTypes = {
 
 const mapStateToProps = state => ({
   pending: getPending(state),
-  todos: getTodos(state)
+  todos: getTodos(state),
+  error: getError(state)
 });
 
 const mapDispatchToProps = dispatch => {

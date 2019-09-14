@@ -16,7 +16,7 @@ export function reducer(state = initialState, action) {
         case FETCH_ERROR:
             return {
                 ...state,
-                pending: true,
+                pending: false,
                 error: action.error
             }
         case FETCH_TODOS_SUCCESS:
