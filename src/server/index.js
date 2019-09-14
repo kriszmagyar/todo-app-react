@@ -42,7 +42,7 @@ app.put('/api/todos/:id', (req, res) => {
     const { title } = req.body;
     const todo = todos.find(t => t.id === id);
 
-    if (todo && title) {
+    if (todo) {
         todo.title = title;
         return res.status(204).send();
     } else {

@@ -35,7 +35,6 @@ class TodoList extends React.Component {
     const { selectedTodoId } = this.state;
 
     if (pending) return <Loader />;
-    if (error) return "Something bad happened! Try refresh your page!";
     if (todos.length === 0) return <DoneCard />;
 
     return (

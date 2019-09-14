@@ -12,21 +12,21 @@ export const addTodo = todo => dispatch => {
     fetch("/api/todos", { method: "POST", headers, body: JSON.stringify(todo) })
         .then(res => handleResponse(res))
         .then(res => dispatch(addTodoSuccess(res)))
-        .catch(err => dispatch(fetchError(err)))
+        .catch(err => dispatch(fetchError(err.message)))
 }
 
 export const deleteTodo = id => dispatch => {
     fetch(`/api/todos/${id}`, { method: "DELETE" })
         .then(res => handleResponse(res))
         .then(res => dispatch(deleteTodoSuccess(id)))
-        .catch(err => dispatch(fetchError(err)))
+        .catch(err => dispatch(fetchError(err.message)))
 }
 
 export const editTodo = todo => dispatch => {
     dispatch(editTodoStart(todo));
     fetch(`/api/todos/${todo.id}`, { method: "PUT", headers, body: JSON.stringify(todo) })
         .then(res => handleResponse(res))
-        .catch(err => dispatch(fetchError(err)))
+        .catch(err => dispatch(fetchError(err.message)))
 }
 
 const handleResponse = res => {

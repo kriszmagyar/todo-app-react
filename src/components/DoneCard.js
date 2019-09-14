@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles({
     text: {
         textAlign: 'center',
-        padding: 100
+        padding: '100px 20px',
     },
 });
 
