@@ -1,37 +1,68 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@material-ui/core';
 import { Paper, Tooltip, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { getTodos } from '../store/reducer';
+import { getTodos, getPending } from '../store/reducer';
 import { connect } from 'react-redux';
-import { fetchTodos, deleteTodo } from './todoActions';
+import { fetchTodos, deleteTodo, editTodo } from './todoActions';
 
 class TodoList extends React.Component {
+
+  state = {
+    selectedTodoId: null
+  }
 
   componentDidMount() {
     this.props.fetchTodos();
   }
+
+  toggleEdit = id => {
+    this.setState(prevState => ({
+      selectedTodoId: prevState.selectedTodoId === id ? null : id
+    }));
+  }
+
+  handleTitleChange = (e, todo) => {
+    this.props.editTodo({ ...todo, title: e.target.value });
+  }
   
   render() {
-    const { todos, handleEdit, deleteTodo } = this.props;
+    const { todos, pending, deleteTodo } = this.props;
+    const { selectedTodoId } = this.state;
+
+    if (pending) return "Loading...";
+    if (todos.length === 0) return "You are done for now!";
 
     return (
       <Paper>
         <Table>
+          <colgroup>
+            <col style={{width:'1%'}}/>
+            <col style={{width:'60%'}}/>
+            <col style={{width:'39%'}}/>
+          </colgroup> 
           <TableHead>
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell>Title</TableCell>
-              <TableCell align="center">Actions</TableCell>
+              <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {todos.map((todo, index) => (
               <TableRow key={todo.id}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{todo.title}</TableCell>
+                <TableCell>
+                  { selectedTodoId === todo.id 
+                    ? <TextField
+                      autoFocus
+                      value={todo.title}
+                      onChange={e => this.handleTitleChange(e, todo)}
+                    /> 
+                    : todo.title}
+                </TableCell>
                 <TableCell align="right">
                   <Tooltip title="Delete">
                     <IconButton aria-label="delete" onClick={() => deleteTodo(todo.id)}>
@@ -39,7 +70,7 @@ class TodoList extends React.Component {
                     </IconButton>
                   </Tooltip>
                   <Tooltip title="Edit">
-                    <IconButton aria-label="edit" onClick={() => handleEdit(todo.id)} >
+                    <IconButton aria-label="edit" onClick={() => this.toggleEdit(todo.id)} >
                       <EditIcon />
                     </IconButton>
                   </Tooltip>
@@ -58,19 +89,23 @@ TodoList.propTypes = {
         id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired
     })).isRequired,
-    deleteTodo: PropTypes.func.isRequired,
+    pending: PropTypes.bool,
     fetchTodos: PropTypes.func.isRequired,
-    handleEdit: PropTypes.func.isRequired
+    deleteTodo: PropTypes.func.isRequired,
+    editTodo: PropTypes.func.isRequired
+    
 };
 
 const mapStateToProps = state => ({
+  pending: getPending(state),
   todos: getTodos(state)
 });
 
 const mapDispatchToProps = dispatch => {
   return {
       fetchTodos: () => dispatch(fetchTodos()),
-      deleteTodo: id => dispatch(deleteTodo(id))
+      deleteTodo: id => dispatch(deleteTodo(id)),
+      editTodo: (id, todo) => dispatch(editTodo(id, todo)),
   }
 }
 

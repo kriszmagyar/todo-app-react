@@ -15,17 +15,13 @@ export default function App() {
     console.log("Deleting: " + id);
   }
 
-  const handleEdit = (id) => {
-    console.log("Editing: " + id);
-  }
-
   return (
     <React.Fragment>
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <Nav />
         <Container>
-          <TodoList handleDelete={handleDelete} handleEdit={handleEdit} />
+          <TodoList handleDelete={handleDelete} />
           <AddButton handleClick={() => setOpen(true)} />
           <TodoDialog open={open} handleClose={() => setOpen(false)} />
         </Container>

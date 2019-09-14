@@ -3,6 +3,7 @@ export const FETCH_ERROR = 'FETCH_ERROR';
 export const FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS';
 export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS';
 export const DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS';
+export const EDIT_TODO_START = 'EDIT_TODO_START';
 
 export function fetchPending() {
     return {
@@ -35,5 +36,12 @@ export function deleteTodoSuccess(id) {
     return {
         type: DELETE_TODO_SUCCESS,
         id
+    }
+};
+
+export function editTodoStart(todo) {
+    return {
+        type: EDIT_TODO_START,
+        payload: todo
     }
 };
